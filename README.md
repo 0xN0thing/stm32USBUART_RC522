@@ -1,7 +1,7 @@
 # RC522 + USB UART
 
 - [RC522](https://www.youtube.com/watch?v=ujEqJRWthjw)
-<br>
+
 - [USB UART](https://controllerstech.com/send-and-receive-data-to-pc-without-uart-stm32-usb-com/)
 
 
