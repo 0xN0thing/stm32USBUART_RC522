@@ -104,10 +104,25 @@ int main(void)
   {
     /* USER CODE END WHILE */
     status = MFRC522_Request(PICC_REQIDL, str);
+
     status = MFRC522_Anticoll(str);
-    str[MAX_LEN - 1] = '\0';
+    //str[MAX_LEN - 1] = '\0';
     
-	  CDC_Transmit_FS(str, strlen(str));
+    if (status == MI_OK) // Check if Anticollision was successful
+    {
+        // Convert raw bytes to a string of numbers
+        char num_str[68]; // Buffer for the formatted string
+        snprintf(num_str, sizeof(num_str), "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X\n",
+                 str[0], str[1], str[2], str[3], str[4],
+                 str[5], str[6], str[7], str[8], str[9],
+                 str[10], str[12], str[13], str[14], str[15]
+                 );
+        
+        // Transmit the formatted string
+        CDC_Transmit_FS((uint8_t *)num_str, strlen(num_str));
+    }
+
+	  //CDC_Transmit_FS(str, strlen(str));
 	  HAL_Delay (1000);
     /* USER CODE BEGIN 3 */
   }
